@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 967640927816550439}
   - component: {fileID: 3822121263811634697}
   - component: {fileID: 1943715399338178067}
+  - component: {fileID: 4863929063625464128}
   m_Layer: 0
   m_Name: SphereSocket 01
   m_TagString: Untagged
@@ -105,6 +106,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4863929063625464128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822488028157087553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68fcfe1ff5964cf6bb81f4e33d8b19a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4336407271673045507
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +127,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7607398093294646273}
+  - component: {fileID: 8027739887436965506}
   m_Layer: 0
   m_Name: Pawn
   m_TagString: Untagged
@@ -141,6 +155,23 @@ Transform:
   - {fileID: 5807247899300800454}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8027739887436965506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4336407271673045507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35c66c2cc734448797a63f54595c19c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _connectors:
+  - {fileID: 4863929063625464128}
+  - {fileID: 4560491163569021393}
+  - {fileID: 4555890514590243574}
+  - {fileID: 209636955501786710}
 --- !u!1 &6572458348302323540
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +289,7 @@ GameObject:
   - component: {fileID: 253445995089564782}
   - component: {fileID: 2667045952127566873}
   - component: {fileID: 1211455031588432381}
+  - component: {fileID: 4560491163569021393}
   m_Layer: 0
   m_Name: SphereSocket 02
   m_TagString: Untagged
@@ -351,6 +383,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4560491163569021393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6976845434568547336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68fcfe1ff5964cf6bb81f4e33d8b19a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7758970563510421918
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +407,7 @@ GameObject:
   - component: {fileID: 4678150122574847482}
   - component: {fileID: 5589964279256305542}
   - component: {fileID: 430658776270710120}
+  - component: {fileID: 209636955501786710}
   m_Layer: 0
   m_Name: SphereSocket 04
   m_TagString: Untagged
@@ -456,6 +501,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &209636955501786710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7758970563510421918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68fcfe1ff5964cf6bb81f4e33d8b19a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8974895304155393534
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,6 +525,7 @@ GameObject:
   - component: {fileID: 6649352823379842626}
   - component: {fileID: 5554702584534788149}
   - component: {fileID: 8464554459641446980}
+  - component: {fileID: 4555890514590243574}
   m_Layer: 0
   m_Name: SphereSocket 03
   m_TagString: Untagged
@@ -561,3 +619,15 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4555890514590243574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8974895304155393534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68fcfe1ff5964cf6bb81f4e33d8b19a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

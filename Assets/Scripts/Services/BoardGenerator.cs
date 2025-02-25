@@ -1,4 +1,5 @@
-﻿using CrazyPawn;
+﻿using Core;
+using CrazyPawn;
 using UnityEngine;
 using Zenject;
 
@@ -11,37 +12,47 @@ namespace Services
 
         private const float CellSize = 1.5f;
 
-        public void Generate(Vector3 position)
+        public Board Generate(Vector3 position)
         {
+            var newGameObject = new GameObject();
+            newGameObject.name = "Board";
+            var board = newGameObject.AddComponent<Board>();
             var cellsCount = _crazyPawnSettings.CheckerboardSize;
             var startPoint = cellsCount / 2f * CellSize - (CellSize / 2f);
-            var startPosition = new Vector3(-startPoint, 0f, -startPoint);
+            var startPosition = new Vector3(position.x - startPoint, position.y + 0f, position.z - startPoint);
             var blackColor = _crazyPawnSettings.BlackCellColor;
             var whiteColor = _crazyPawnSettings.WhiteCellColor;
             
+            board.Init(position, cellsCount * CellSize);
+
             for (var x = 0; x < cellsCount; x++)
             {
                 for (var z = 0; z < cellsCount; z++)
                 {
                     var cellPosition = startPosition + new Vector3(x * CellSize, 0, z * CellSize);
                     var cellColor = (x + z) % 2 == 0 ? blackColor : whiteColor;
-                    CreateCell(cellPosition, cellColor);
+                    var newCell = CreateCell(cellPosition, cellColor);
+                    newCell.transform.SetParent(board.Transform);
                 }
             }
+
+            return board;
         }
 
-        private void CreateCell(Vector3 position, Color color)
+        private GameObject CreateCell(Vector3 position, Color color)
         {
             var cell = GameObject.CreatePrimitive(PrimitiveType.Plane);
             cell.transform.position = position;
             cell.transform.localScale = new Vector3(CellSize / 10, 1, CellSize / 10); // Plane по умолчанию 10x10
-            
+
             var renderer = cell.GetComponent<Renderer>();
-            
+
             if (renderer != null)
             {
                 renderer.material.color = color;
             }
+            
+            return cell;
         }
     }
 }
