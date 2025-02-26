@@ -8,14 +8,12 @@ namespace EntryPoint
 {
     public class DemoEntryPoint : MonoBehaviour
     {
-        [Inject] private BoardGenerator _boardGenerator;
+        [Inject] private Board _board;
         [Inject] private FigureSpawner _figureSpawner;
-        [Inject] private DiContainer _diContainer;
 
         private void Awake()
         {
-            var board = _boardGenerator.Generate(Vector3.zero);
-            _figureSpawner.SpawnFigures(board.Transform.position);
+            _figureSpawner.SpawnFigures(_board.Transform.position);
         }
     }
 }

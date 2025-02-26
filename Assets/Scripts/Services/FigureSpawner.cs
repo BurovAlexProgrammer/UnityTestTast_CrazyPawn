@@ -9,6 +9,7 @@ namespace Services
     {
         [Inject] private CrazyPawnSettings _crazyPawnSettings;
         [Inject] private DiContainer _diContainer;
+        [Inject] private FigureControlService _figureControlService;
 
         [SerializeField] private FigureView _figurePrefab;
 
@@ -19,12 +20,11 @@ namespace Services
 
             for (var i = 0; i < spawnCount; i++)
             {
-                var figure = _diContainer.InstantiatePrefabForComponent<FigureView>(_figurePrefab);
-                figure.Init();
-                figure.transform.position = GetRandomPointInRadius(center, spawnRadius);
+                var position = GetRandomPointInRadius(center, spawnRadius);
+                _figureControlService.CreateFigure(_figurePrefab, position);
             }
         }
-        
+
         Vector3 GetRandomPointInRadius(Vector3 center, float radius)
         {
             Vector2 randomPoint2D = Random.insideUnitCircle * radius;

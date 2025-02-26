@@ -1,4 +1,5 @@
-﻿using CrazyPawn;
+﻿using Core;
+using CrazyPawn;
 using Services;
 using UnityEngine;
 using Zenject;
@@ -12,9 +13,12 @@ namespace ContextInstallers
 
         public override void InstallBindings()
         {
+            var board = BoardGenerator.Generate(_crazyPawnSettings, Vector3.zero);
+            
             Container.Bind<CrazyPawnSettings>().FromInstance(_crazyPawnSettings).AsSingle();
-            Container.Bind<BoardGenerator>().FromNew().AsSingle();
+            Container.Bind<Board>().FromInstance(board).AsSingle();
             Container.Bind<FigureSpawner>().FromInstance(_figureSpawner).AsSingle();
+            Container.Bind<FigureControlService>().FromNew().AsSingle();
         }
     }
 }

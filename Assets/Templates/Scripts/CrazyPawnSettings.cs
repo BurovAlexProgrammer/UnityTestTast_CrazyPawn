@@ -14,5 +14,8 @@ namespace CrazyPawn
         [SerializeField] public int CheckerboardSize = 18;
         [SerializeField] public Color BlackCellColor = Color.yellow;
         [SerializeField] public Color WhiteCellColor = Color.green;
+
+        [SerializeField] public float DragSensitivity = 0.01f;
+        
     }
 }
