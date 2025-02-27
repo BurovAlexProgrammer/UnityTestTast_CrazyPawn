@@ -20,7 +20,7 @@ namespace ContextInstallers
             Container.Bind<FigureSpawner>().FromInstance(_figureSpawner).AsSingle();
             Container.Bind<FigureControlService>().FromNew().AsSingle();
             Container.BindInterfacesAndSelfTo<SocketService>().FromNew().AsSingle();
-            // Container.BindInterfacesAndSelfTo<ConnectionService>().FromNew().AsSingle();
+            Container.BindInterfacesAndSelfTo<ConnectionService>().FromNew().AsSingle();
         }
     }
 }

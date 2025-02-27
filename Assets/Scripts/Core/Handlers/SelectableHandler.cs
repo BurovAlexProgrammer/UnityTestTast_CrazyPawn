@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,7 +7,7 @@ namespace Core
 {
     public class SelectableHandler : MonoBehaviour, IPointerClickHandler
     {
-        private bool _selected;
+        [SerializeField, ReadOnly(true)] private bool _selected;
         
         public event Action<bool> SelectionChanged;
 

@@ -1,17 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Core;
+using Core.Prank;
 using CrazyPawn;
+using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Services
 {
-    public class ConnectionService: ITickable
+    public class ConnectionService: IInitializable, IDisposable
     {
         [Inject] private CrazyPawnSettings _settings;
         [Inject] private DiContainer _diContainer;
+        [Inject] private FigureControlService _figureControl;
 
         private List<ConnectionView> _connectionViews = new(4);
-        
+
+        public void Initialize()
+        {
+            _figureControl.FigureDestroyed += OnFigureDestroyed;
+        }
+
+        public void Dispose()
+        {
+            _figureControl.FigureDestroyed -= OnFigureDestroyed;
+        }
+
         public void CreateConnection(SocketView socketViewStart, SocketView socketViewEnd)
         {
             var newConnection = _diContainer.InstantiatePrefabForComponent<ConnectionView>(_settings.ConnectionViewPrefab);
@@ -19,11 +35,22 @@ namespace Services
             _connectionViews.Add(newConnection);
         }
 
-        public void Tick()
+        private void OnFigureDestroyed(FigureView figureView)
         {
-            foreach (var connectionView in _connectionViews)
+            var dependConnections = _connectionViews
+                .Where(x => x.IsParentFigure(figureView))
+                .ToArray();
+
+            foreach (var connection in dependConnections)
             {
-                connectionView.UpdateLine();
+                if (_settings.IsPrank)
+                {
+                    var prankLine = Object.Instantiate<PrankLine>(_settings.PrankLinePrefab);
+                    prankLine.Init(connection.LineRenderer);
+                }
+                
+                connection.Destroy();
+                _connectionViews.Remove(connection);
             }
         }
     }

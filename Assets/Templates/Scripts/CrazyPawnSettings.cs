@@ -1,5 +1,7 @@
 using Core;
+using Core.Prank;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CrazyPawn
 {
@@ -18,6 +20,10 @@ namespace CrazyPawn
 
         [SerializeField] public float DragSensitivity = 0.01f;
         [SerializeField] public ConnectionView ConnectionViewPrefab;
-        
+
+        [Header("Чтобы улыбнуло )")]
+        [SerializeField] public bool IsPrank = true;
+        [SerializeField] public PrankLine PrankLinePrefab;
+        [SerializeField] public PrankFigure PrankFigurePrefab;
     }
 }

@@ -1,8 +1,11 @@
-﻿using Core;
+﻿using System;
+using Core;
+using Core.Prank;
 using CrazyPawn;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Services
 {
@@ -11,7 +14,10 @@ namespace Services
         [Inject] private CrazyPawnSettings _settings;
         [Inject] private DiContainer _diContainer;
         [Inject] private Board _board;
+        
         private Vector3 _dragOffset;
+
+        public event Action<FigureView> FigureDestroyed;
 
         public void CreateFigure(FigureView prefab, Vector3 position)
         {
@@ -29,6 +35,7 @@ namespace Services
             figureView.Dragging -= Figure_OnDragging;
             figureView.DragFinished -= Figure_OnDragFinished;
             Object.Destroy(figureView.gameObject);
+            FigureDestroyed?.Invoke(figureView);
         }
 
         private void Figure_OnDragFinished(FigureView figureView, PointerEventData eventData)
@@ -38,6 +45,9 @@ namespace Services
             if (figureView.IsDeleteMode)
             {
                 DeleteFigure(figureView);
+                
+                if (_settings.IsPrank)
+                    Object.Instantiate<PrankFigure>(_settings.PrankFigurePrefab).Init(figureView.transform);
             }
         }
 

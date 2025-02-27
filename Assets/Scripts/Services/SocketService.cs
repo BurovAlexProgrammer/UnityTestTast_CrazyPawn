@@ -10,7 +10,8 @@ namespace Services
     public class SocketService : IInitializable
     {
         [Inject] private CrazyPawnSettings _settings;
-        // [Inject] private ConnectionService _connectionService;
+        [Inject] private ConnectionService _connectionService;
+        [Inject] private FigureControlService _figureControl;
 
         private List<SocketView> _socketsList;
         
@@ -19,8 +20,22 @@ namespace Services
         public void Initialize()
         {
             _socketsList = new List<SocketView>(_settings.InitialPawnCount * 4);
+            _figureControl.FigureDestroyed += OnFigureDestroyed;
         }
-        
+
+        private void OnFigureDestroyed(FigureView figureView)
+        {
+            var dependedSockets = _socketsList
+                .Where(x => x.ParentFigureView == figureView)
+                .ToArray();
+
+            foreach (var socket in dependedSockets)
+            {
+                Object.Destroy(socket.gameObject);
+                _socketsList.Remove(socket);
+            }
+        }
+
         public void RegisterConnector(SocketView socketView)
         {
             socketView.gameObject.name = $"Socket{_socketsList.Count}";
@@ -30,8 +45,7 @@ namespace Services
 
         private void ConnectorView_OnSelectionChanged(SocketView socketView, bool selected)
         {
-            return;
-            _selectionsCount = selected ? _selectionsCount + 1 : _selectionsCount - 1;
+            _selectionsCount = _socketsList.Count(x => x.IsSelected);
 
             if (_selectionsCount == 2)
             {
@@ -42,7 +56,6 @@ namespace Services
                     connector.SetSelection(false);
                 }
             }
-            Debug.Log($"Selected: {selected}");
         }
 
         private void TryToConnect()
@@ -55,7 +68,7 @@ namespace Services
                 return;
             }
 
-            // _connectionService.CreateConnection(selectedSockets[0], selectedSockets[1]);
+            _connectionService.CreateConnection(selectedSockets[0], selectedSockets[1]);
         }
     }
 }

@@ -6,10 +6,10 @@ using Zenject;
 
 namespace Core
 {
-    public class FigureView:MonoBehaviour
+    public class FigureView : MonoBehaviour
     {
         [Inject] private CrazyPawnSettings _settings;
-        
+
         [SerializeField] private DragDropHandler _dragDropHandler;
         [SerializeField] private SocketView[] _connectors;
         [SerializeField] private MeshRenderer _meshRenderer;
@@ -29,10 +29,10 @@ namespace Core
         {
             _initMaterial = _meshRenderer.material;
             _transform = transform;
-            _dragDropHandler.DragStarted += eventData => DragStarted?.Invoke(this, eventData);;
+            _dragDropHandler.DragStarted += eventData => DragStarted?.Invoke(this, eventData);
             _dragDropHandler.Dragging += eventData => Dragging?.Invoke(this, eventData);
             _dragDropHandler.DragFinished += eventData => DragFinished?.Invoke(this, eventData);
-            
+
             foreach (var connectorView in _connectors)
             {
                 connectorView.Init(this);
@@ -42,6 +42,12 @@ namespace Core
         public void SetDeleteMode(bool isDeleteMode)
         {
             _meshRenderer.material = isDeleteMode ? _settings.DeleteMaterial : _initMaterial;
+            
+            foreach (var connector in _connectors)
+            {
+                connector.SetDeleteMode(isDeleteMode);
+            }
+            
             _isDeleteMode = isDeleteMode;
         }
     }

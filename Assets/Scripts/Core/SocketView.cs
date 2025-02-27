@@ -38,15 +38,26 @@ namespace Core
             _socketService.RegisterConnector(this);
         }
 
+        public void SetDeleteMode(bool isDeleteMode)
+        {
+            _meshRenderer.material = isDeleteMode ? _settings.DeleteMaterial : _initialMaterial;
+        }
+
         public void SetSelection(bool selected)
         {
             _selectableHandler.SetSelection(selected);
+            Refresh();
         }
         
         private void OnSelectionChanged(bool selected)
         {
             SelectionChanged?.Invoke(this, selected);
-            _meshRenderer.material = selected ? _settings.ActiveConnectorMaterial : _initialMaterial;
+            Refresh();
+        }
+
+        private void Refresh()
+        {
+            _meshRenderer.material = IsSelected ? _settings.ActiveConnectorMaterial : _initialMaterial;
         }
         
         private void OnDragFinished(PointerEventData eventData)
