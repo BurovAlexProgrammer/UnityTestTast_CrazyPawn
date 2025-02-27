@@ -19,6 +19,8 @@ namespace ContextInstallers
             Container.Bind<Board>().FromInstance(board).AsSingle();
             Container.Bind<FigureSpawner>().FromInstance(_figureSpawner).AsSingle();
             Container.Bind<FigureControlService>().FromNew().AsSingle();
+            Container.BindInterfacesAndSelfTo<SocketService>().FromNew().AsSingle();
+            // Container.BindInterfacesAndSelfTo<ConnectionService>().FromNew().AsSingle();
         }
     }
 }

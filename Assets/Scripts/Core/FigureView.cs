@@ -11,7 +11,7 @@ namespace Core
         [Inject] private CrazyPawnSettings _settings;
         
         [SerializeField] private DragDropHandler _dragDropHandler;
-        [SerializeField] private ConnectorView[] _connectors;
+        [SerializeField] private SocketView[] _connectors;
         [SerializeField] private MeshRenderer _meshRenderer;
 
         private Transform _transform;

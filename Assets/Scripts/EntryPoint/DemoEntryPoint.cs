@@ -11,7 +11,7 @@ namespace EntryPoint
         [Inject] private Board _board;
         [Inject] private FigureSpawner _figureSpawner;
 
-        private void Awake()
+        private void Start()
         {
             _figureSpawner.SpawnFigures(_board.Transform.position);
         }

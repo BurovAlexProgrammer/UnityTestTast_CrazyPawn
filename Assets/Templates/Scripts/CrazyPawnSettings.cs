@@ -1,3 +1,4 @@
+using Core;
 using UnityEngine;
 
 namespace CrazyPawn
@@ -16,6 +17,7 @@ namespace CrazyPawn
         [SerializeField] public Color WhiteCellColor = Color.green;
 
         [SerializeField] public float DragSensitivity = 0.01f;
+        [SerializeField] public ConnectionView ConnectionViewPrefab;
         
     }
 }
