@@ -29,7 +29,7 @@ namespace Services
                 {
                     var cellPosition = startPosition + new Vector3(x * CellSize, 0, z * CellSize);
                     var cellColor = (x + z) % 2 == 0 ? blackColor : whiteColor;
-                    var newCell = CreateCell(cellPosition, cellColor);
+                    var newCell = CreateCell(cellPosition, cellColor, crazyPawnSettings.ActiveConnectorMaterial);
                     newCell.transform.SetParent(board.Transform);
                 }
             }
@@ -37,7 +37,7 @@ namespace Services
             return board;
         }
 
-        private static GameObject CreateCell(Vector3 position, Color color)
+        private static GameObject CreateCell(Vector3 position, Color color, Material material)
         {
             var cell = GameObject.CreatePrimitive(PrimitiveType.Plane);
             cell.transform.position = position;
@@ -47,6 +47,7 @@ namespace Services
 
             if (renderer != null)
             {
+                renderer.material = material;
                 renderer.material.color = color;
             }
             

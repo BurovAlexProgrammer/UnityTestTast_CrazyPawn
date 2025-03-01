@@ -20,6 +20,9 @@ public class InputService : ITickable
 
     public void Tick()
     {
+        if (Input.GetKey(KeyCode.Escape)) 
+            Application.Quit();
+        
         if (_mouseDown && Vector3.Distance(_dragStartPos, Input.mousePosition) > DragThreshold)
         {
             _isDraggingMode = true;
