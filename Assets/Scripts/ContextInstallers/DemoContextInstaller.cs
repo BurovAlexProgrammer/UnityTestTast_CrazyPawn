@@ -15,6 +15,7 @@ namespace ContextInstallers
         {
             var board = BoardGenerator.Generate(_crazyPawnSettings, Vector3.zero);
             
+            Container.BindInterfacesAndSelfTo<InputService>().FromNew().AsSingle();
             Container.Bind<CrazyPawnSettings>().FromInstance(_crazyPawnSettings).AsSingle();
             Container.Bind<Board>().FromInstance(board).AsSingle();
             Container.Bind<FigureSpawner>().FromInstance(_figureSpawner).AsSingle();
