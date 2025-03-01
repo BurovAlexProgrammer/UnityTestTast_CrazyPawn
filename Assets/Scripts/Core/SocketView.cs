@@ -26,6 +26,7 @@ namespace Core
         private Transform _transform;
         private Material _initialMaterial;
         private bool _isDragStarted;
+        private bool _isHighlighted;
 
         public FigureView ParentFigureView => _parentFigureView;
         public bool IsSelected => _selectableHandler.Selected;
@@ -49,9 +50,15 @@ namespace Core
             _meshRenderer.material = isDeleteMode ? _settings.DeleteMaterial : _initialMaterial;
         }
 
-        public void SetSelection(bool selected)
+        public void SetSelection(bool selected, bool withNotify = true)
         {
-            _selectableHandler.SetSelection(selected);
+            _selectableHandler.SetSelection(selected, withNotify);
+            Refresh();
+        }
+        
+        public void SetHighlight(bool isHighlighted)
+        {
+            _isHighlighted = isHighlighted;
             Refresh();
         }
 
@@ -80,13 +87,14 @@ namespace Core
 
         private void OnSelectionChanged(bool selected)
         {
+            Debug.Log($"Selected changed. {selected}. Name: {gameObject.name}");
             SelectionChanged?.Invoke(this, selected);
             Refresh();
         }
 
         private void Refresh()
         {
-            _meshRenderer.material = IsSelected ? _settings.ActiveConnectorMaterial : _initialMaterial;
+            _meshRenderer.material = _isHighlighted ? _settings.ActiveConnectorMaterial : _initialMaterial;
         }
     }
 }

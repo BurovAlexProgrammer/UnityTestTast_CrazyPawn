@@ -19,12 +19,14 @@ namespace Core
             SelectionChanged?.Invoke(_selected);
         }
 
-        public void SetSelection(bool selected)
+        public void SetSelection(bool selected, bool withNotify = true)
         {
             if (_selected == selected) return;
 
             _selected = selected;
-            SelectionChanged?.Invoke(selected);
+            
+            if (withNotify)
+                SelectionChanged?.Invoke(selected);
         }
     }
 }

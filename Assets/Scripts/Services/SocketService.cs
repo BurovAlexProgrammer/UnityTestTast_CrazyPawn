@@ -22,13 +22,14 @@ namespace Services
         private SocketView _startDragSocket;
         private int _selectionsCount;
         private bool _isConnectionDragging;
+        private FigureView _selectedFigure;
 
         public void Initialize()
         {
             _socketsList = new List<SocketView>(_settings.InitialPawnCount * 4);
             _figureControl.FigureDestroyed += OnFigureDestroyed;
             _dragConnectionLineRenderer = _diContainer.InstantiatePrefabForComponent<LineRenderer>(_settings.ConnectionLinePrefab);
-            _dragConnectionLineRenderer.widthMultiplier = 0.1f;
+            _dragConnectionLineRenderer.widthMultiplier = 0.07f;
             _dragConnectionLineRenderer.gameObject.SetActive(false);
         }
 
@@ -101,16 +102,46 @@ namespace Services
 
         private void ConnectorView_OnSelectionChanged(SocketView socketView, bool selected)
         {
+            Refresh();
+        }
+
+        private void Refresh()
+        {
             _selectionsCount = _socketsList.Count(x => x.IsSelected);
 
-            if (_selectionsCount == 2)
+            if (_selectionsCount == 1)
             {
+                Debug.Log("H count: " + _socketsList.Count);
+                _selectedFigure = _socketsList.First(x => x.IsSelected).ParentFigureView;
+                Highlight(true);
+                return;
+            }
+            
+            if (_selectionsCount >= 2)
+            {
+                Debug.Log("Des count: " + _socketsList.Count);
+                
                 TryToConnect();
 
                 foreach (var connector in _socketsList)
                 {
-                    connector.SetSelection(false);
+                    connector.SetSelection(false, false);
                 }
+                
+                Refresh();
+            }
+            
+            Highlight(false);
+        }
+
+        private void Highlight(bool state)
+        {
+            var availableSockets = _socketsList
+                .Where(x => !x.IsSelected && x.ParentFigureView != _selectedFigure);
+            
+            foreach (var connector in availableSockets)
+            {
+                connector.SetHighlight(state);
             }
         }
 

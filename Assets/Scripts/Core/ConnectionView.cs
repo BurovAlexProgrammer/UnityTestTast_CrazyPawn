@@ -17,7 +17,7 @@ namespace Core
             _socketViewStart = socketViewStart;
             _lineRenderer.positionCount = 2;
             _lineRenderer.useWorldSpace = true;
-            _lineRenderer.widthMultiplier = 0.1f;
+            _lineRenderer.widthMultiplier = 0.07f;
         }
 
         public void Destroy()
