@@ -23,6 +23,8 @@ MonoBehaviour:
   DragSensitivity: 0.01
   ConnectionViewPrefab: {fileID: 1051523152327557092, guid: 1e6d490f609e1a449bee9ed61895a641,
     type: 3}
+  ConnectionLinePrefab: {fileID: 3209286816823600638, guid: 0924b9e43b51ce94aabfd0497050c803,
+    type: 3}
   IsPrank: 1
   PrankLinePrefab: {fileID: 2846923048974335307, guid: 203f441e3f8ee5b45b20f5be6b166f67,
     type: 3}

@@ -5,10 +5,10 @@ using Zenject;
 
 public class InputService : ITickable
 {
-    public static event Action<GameObject, PointerEventData> OnDragStarted;
-    public static event Action<GameObject, PointerEventData> OnDragging;
-    public static event Action<GameObject, PointerEventData> OnDragFinished;
-    public static event Action<GameObject, PointerEventData> OnClicked;
+    public event Action<GameObject, PointerEventData> DragStarted;
+    public event Action<GameObject, PointerEventData> Dragging;
+    public event Action<GameObject, PointerEventData> DragFinished;
+    public event Action<GameObject, PointerEventData> OnClicked;
 
     private GameObject _pointerObject;
     private Vector3 _dragStartPos;
@@ -51,8 +51,7 @@ public class InputService : ITickable
 
         _isDragStarted = true;
         UpdateObjectUnderPointer();
-        OnDragStarted?.Invoke(_pointerObject, GetEventData());
-        Debug.Log($"-- OnDragStarted object:{_pointerObject?.name} screenPos:{GetEventData().position}");
+        DragStarted?.Invoke(_pointerObject, GetEventData());
     }
 
     private void ContinueDrag()
@@ -60,8 +59,7 @@ public class InputService : ITickable
         if (!_isDragStarted) return;
 
         UpdateObjectUnderPointer();
-        OnDragging?.Invoke(_pointerObject, GetEventData());
-        Debug.Log($"OnDragging object:{_pointerObject?.name} screenPos:{GetEventData().position}");
+        Dragging?.Invoke(_pointerObject, GetEventData());
     }
 
     private void FinishDrag()
@@ -70,17 +68,15 @@ public class InputService : ITickable
         
         if (_isDraggingMode)
         {
-            OnDragFinished?.Invoke(_pointerObject, GetEventData());
-            Debug.Log($"OnDragFinished object:{_pointerObject?.name} screenPos:{GetEventData().position}");   
+            DragFinished?.Invoke(_pointerObject, GetEventData());
         }
         else
         {
             OnClicked?.Invoke(_pointerObject, GetEventData());
-            Debug.Log($"OnClicked object:{_pointerObject?.name} screenPos:{GetEventData().position}");   
         }
 
         _isDraggingMode = false;
-        _isDraggingMode = false;
+        _isDragStarted = false;
         _pointerObject = null;
     }
 
@@ -88,7 +84,8 @@ public class InputService : ITickable
     {
         return new PointerEventData(EventSystem.current)
         {
-            position = Input.mousePosition
+            position = Input.mousePosition,
+            pointerEnter = _pointerObject
         };
     }
 

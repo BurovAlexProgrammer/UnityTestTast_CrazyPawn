@@ -1,5 +1,6 @@
 ﻿using System;
 using Core;
+using Core.Common;
 using Core.Prank;
 using CrazyPawn;
 using UnityEngine;
@@ -53,7 +54,7 @@ namespace Services
 
         private void Figure_OnDragging(FigureView figureView, PointerEventData eventData)
         {
-            var raycastPoint = GetRaycastPosition(figureView, eventData);
+            var raycastPoint = Utils.GetRaycastPosition(eventData);
             
             MoveFigure(figureView, raycastPoint);
             Validate(figureView);
@@ -61,7 +62,7 @@ namespace Services
 
         private void Figure_OnDragStarted(FigureView figureView, PointerEventData eventData)
         {
-            var raycastPoint = GetRaycastPosition(figureView, eventData);
+            var raycastPoint = Utils.GetRaycastPosition(eventData);
             _dragOffset = figureView.Transform.position - raycastPoint;
             
             MoveFigure(figureView, raycastPoint);
@@ -77,18 +78,6 @@ namespace Services
         {
             var isOutBoard = _board.Bounds.Contains(figureView.Transform.position) == false;
             figureView.SetDeleteMode(isOutBoard);
-        }
-        
-        private static Vector3 GetRaycastPosition(FigureView figureView, PointerEventData eventData)
-        {
-            // var delta = eventData.delta * _settings.DragSensitivity;
-            // figureView.Transform.Translate(delta.x, 0f, delta.y);
-            var screenPosition = eventData.position;
-            var ray = Camera.main.ScreenPointToRay(screenPosition);
-            var offset = -ray.origin.y / ray.direction.y;
-            var raycastPoint = ray.origin + ray.direction * offset;
-
-            return raycastPoint;
         }
     }
 }
